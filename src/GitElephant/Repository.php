@@ -24,7 +24,7 @@ use GitElephant\GitBinary;
 use GitElephant\Exception;
 
 /**
- * Temporary class override until PR https://github.com/matteosister/GitElephant/pull/128 gets merged
+ * Temporary class override until PR https://github.com/matteosister/GitElephant/pull/132 gets merged
  *
  * Class Repository
  *

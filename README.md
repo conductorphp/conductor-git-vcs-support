@@ -6,20 +6,6 @@ This module adds support for Git VCS in
 
 ## Config
 
-```php
-
-<?php
-
-return [
-    'vcs' => [
-        'adapters' => [
-            'github' => [
-                'class' => \ConductorGitVcsSupport\Adapter\GitVcsAdapter::class,
-                'arguments' => [
-                    'ssh_private_key' => '/home/dev/.ssh/id_rsa',
-                ],
-            ],
-        ],
-    ],
-];
-```
+This module requires no configuration. It uses the git shell command which relies on your shell user's built in methods
+for git authentication. In a future release, we may update this and make configuration of authentication credentials
+possible.

@@ -2,11 +2,11 @@
 
 namespace ConductorGitVcsSupport\Adapter;
 
-use ConductorGitVcsSupport\GitElephant;
-use ConductorCore\Repository\RepositoryInterface;
+use ConductorCore\Repository\RepositoryAdapterInterface;
 use ConductorGitVcsSupport\Exception;
+use ConductorGitVcsSupport\GitElephant\Repository;
 
-class GitVcsAdapter implements RepositoryInterface
+class GitVcsAdapter implements RepositoryAdapterInterface
 {
     /**
      * @var string
@@ -17,18 +17,76 @@ class GitVcsAdapter implements RepositoryInterface
      */
     private $path;
     /**
-     * @var GitElephant
+     * @var Repository
      */
     private $repository;
+    /**
+     * @var string
+     */
+    private $currentRepoReference;
 
-    public function setRepoUrl(string $repoUrl): void
+    /**
+     * @inheritdoc
+     */
+    public function checkout(string $repoReference): void
     {
-        if ($repoUrl != $this->repository) {
-            $this->repoUrl = $repoUrl;
-            $this->repository = null;
+        if ($repoReference == $this->currentRepoReference) {
+            return;
+        }
+
+        $repository = $this->getRepository();
+        if (!file_exists("{$this->path}/.git")) {
+            $repository->cloneFrom($this->repoUrl, $this->path);
+            $repository->checkout($repoReference);
+        } else {
+            if ($repository->isDirty()) {
+                throw new Exception\RuntimeException(
+                    'Code path "' . $this->path . '" is dirty. Clean path before deploying code from repo.'
+                );
+            }
+            $repository->fetch();
+            $repository->checkout($repoReference);
         }
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function isClean(): bool
+    {
+        $repository = $this->getRepository();
+        return !$repository->isDirty();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function pull(): void
+    {
+        $repository = $this->getRepository();
+        $repository->pull();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function stash(string $message): void
+    {
+        $repository = $this->getRepository();
+        $repository->stash($message, true);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setRepoUrl(string $repoUrl): void
+    {
+        $this->repoUrl = $repoUrl;
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function setPath(string $path): void
     {
         if ($path != $this->path) {
@@ -37,56 +95,16 @@ class GitVcsAdapter implements RepositoryInterface
         }
     }
 
-    private function getRepository()
+    /**
+     * @return Repository
+     */
+    private function getRepository(): Repository
     {
         if (is_null($this->repository)) {
-            $this->repository = new GitElephant\Repository($this->repoUrl);
+            $this->repository = new Repository($this->path);
         }
 
         return $this->repository;
     }
 
-    public function checkout(string $repoReference): void
-    {
-//        $this->repository->
-//        !file_exists("{$codePath}/.git")
-
-//        if (!file_exists("{$codePath}/.git")) {
-//            $this->logger->debug("Cloning repository \"$repoUrl:$repoReference\" to \"{$codePath}\".");
-//            $repo = new Repository($codePath);
-//            $this->repo->cloneFrom($repoUrl, $codePath);
-//            $repo->checkout($repoReference);
-//        } else {
-//            $repo = new Repository($codePath);
-//            if ($repo->isDirty()) {
-//                throw new Exception\RuntimeException(
-//                    'Code path "' . $codePath . '" is dirty. Clean path before deploying code from repo.'
-//                );
-//            }
-//            $this->logger->debug("Pulling the latest code from \"$repoUrl:$repoReference\" to \"{$codePath}\".");
-//            $repo->checkout($repoReference);
-//            $repo->pull('origin', $repoReference, false);
-//        }
-        // TODO: Implement checkout() method.
-    }
-
-    public function isClean(): bool
-    {
-        // TODO: Implement isClean() method.
-    }
-
-    public function pull(string $origin, $repoReference): void
-    {
-        // TODO: Implement pull() method.
-    }
-
-    public function stash(string $message): void
-    {
-//        $repo = new Repository($codeRoot);
-//        if ($repo->isDirty()) {
-//            $this->logger->info('Stashing code changes.');
-//            $repo->stash('Conductor stash', true);
-//        }
-        // TODO: Implement stash() method.
-    }
 }

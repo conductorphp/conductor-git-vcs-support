@@ -28,7 +28,7 @@ class GitVcsAdapter implements RepositoryAdapterInterface
     /**
      * @inheritdoc
      */
-    public function checkout(string $repoReference): void
+    public function checkout(string $repoReference, bool $shallow = false): void
     {
         if ($repoReference == $this->currentRepoReference) {
             return;
@@ -36,7 +36,8 @@ class GitVcsAdapter implements RepositoryAdapterInterface
 
         $repository = $this->getRepository();
         if (!file_exists("{$this->path}/.git")) {
-            $repository->cloneFrom($this->repoUrl, $this->path);
+            $depth = $shallow ? 1 : null;
+            $repository->cloneFrom($this->repoUrl, $this->path, $depth);
             $repository->checkout($repoReference);
         } else {
             if ($repository->isDirty()) {

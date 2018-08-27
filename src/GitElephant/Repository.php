@@ -22,6 +22,7 @@ namespace ConductorGitVcsSupport\GitElephant;
 use GitElephant\Command\Caller\Caller;
 use GitElephant\GitBinary;
 use GitElephant\Exception;
+use GitElephant\Command\CloneCommand;
 
 /**
  * Temporary class override until PR https://github.com/matteosister/GitElephant/pull/132 gets merged
@@ -56,6 +57,26 @@ class Repository extends \GitElephant\Repository
         }
 
         $this->caller = new Caller($binary, $repositoryPath);
+    }
+
+    /**
+     * Clone a repository
+     *
+     * @param string $url the repository url (i.e. git://github.com/matteosister/GitElephant.git)
+     * @param null   $to  where to clone the repo
+     * @param int   $depth  Depth to clone repo. Specify 1 to perform a shallow clone
+     *
+     * @throws \RuntimeException
+     * @throws \Symfony\Component\Process\Exception\LogicException
+     * @throws \Symfony\Component\Process\Exception\InvalidArgumentException
+     * @throws \Symfony\Component\Process\Exception\RuntimeException
+     * @return Repository
+     */
+    public function cloneFrom($url, $to = null, $depth = null)
+    {
+        $command = (Command\CloneCommand::getInstance($this))->cloneUrl($url, $to, $depth);
+        $this->caller->execute($command);
+        return $this;
     }
 
     /**

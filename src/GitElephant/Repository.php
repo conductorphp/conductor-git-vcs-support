@@ -21,14 +21,12 @@ namespace ConductorGitVcsSupport\GitElephant;
 
 use ConductorGitVcsSupport\GitElephant\Command\Caller\Caller;
 use GitElephant\Exception;
-use ConductorGitVcsSupport\GitElephant\GitBinary;
 
 /**
  * Class Repository
  *
- * @todo Remove this class once https://github.com/matteosister/GitElephant/pull/132,
- *       https://github.com/matteosister/GitElephant/pull/147, and https://github.com/matteosister/GitElephant/pull/148
- *       are merged
+ * @todo Remove this class once https://github.com/matteosister/GitElephant/pull/147 and
+ *       https://github.com/matteosister/GitElephant/pull/148 are merged
  * @package ConductorAppOrchestration\GitElephant
  */
 class Repository extends \GitElephant\Repository
@@ -81,18 +79,5 @@ class Repository extends \GitElephant\Repository
             ->cloneUrl($url, $to, $repoReference, $depth, $recursive);
         $this->caller->execute($command);
         return $this;
-    }
-
-    /**
-     *  Save your local modifications to a new stash, and run git reset --hard to revert them.
-     *
-     * @param string|null $message
-     * @param boolean     $includeUntracked
-     * @param boolean     $keepIndex
-     */
-    public function stash($message = null, $includeUntracked = false, $keepIndex = false)
-    {
-        $command = (Command\StashCommand::getInstance($this))->save($message, $includeUntracked, $keepIndex);
-        $this->caller->execute($command);
     }
 }

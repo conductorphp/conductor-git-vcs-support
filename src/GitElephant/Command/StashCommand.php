@@ -24,7 +24,7 @@ use ConductorGitVcsSupport\GitElephant\Repository;
 /**
  * Stash command generator
  *
- * This class will be removed once PR https://github.com/matteosister/GitElephant/pull/132 is merged
+ * @todo Remove this class once PR https://github.com/matteosister/GitElephant/pull/132 is merged
  *
  * @author Matteo Giachino <matteog@gmail.com>
  * @author Kirk Madera <kmadera@robofirm.com>

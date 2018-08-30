@@ -19,16 +19,16 @@
 
 namespace ConductorGitVcsSupport\GitElephant;
 
-use GitElephant\Command\Caller\Caller;
-use GitElephant\GitBinary;
+use ConductorGitVcsSupport\GitElephant\Command\Caller\Caller;
 use GitElephant\Exception;
-use GitElephant\Command\CloneCommand;
+use ConductorGitVcsSupport\GitElephant\GitBinary;
 
 /**
- * Temporary class override until PR https://github.com/matteosister/GitElephant/pull/132 gets merged
- *
  * Class Repository
  *
+ * @todo Remove this class once https://github.com/matteosister/GitElephant/pull/132,
+ *       https://github.com/matteosister/GitElephant/pull/147, and https://github.com/matteosister/GitElephant/pull/148
+ *       are merged
  * @package ConductorAppOrchestration\GitElephant
  */
 class Repository extends \GitElephant\Repository
@@ -62,9 +62,11 @@ class Repository extends \GitElephant\Repository
     /**
      * Clone a repository
      *
-     * @param string $url the repository url (i.e. git://github.com/matteosister/GitElephant.git)
-     * @param null   $to  where to clone the repo
-     * @param int   $depth  Depth to clone repo. Specify 1 to perform a shallow clone
+     * @param string      $url           the repository url (i.e. git://github.com/matteosister/GitElephant.git)
+     * @param null        $to            where to clone the repo
+     * @param string|null $repoReference Repo reference to clone. Required if performing a shallow clone.
+     * @param int|null    $depth         Depth to clone repo. Specify 1 to perform a shallow clone
+     * @param bool        $recursive     Whether to recursively clone child repos.
      *
      * @throws \RuntimeException
      * @throws \Symfony\Component\Process\Exception\LogicException
@@ -72,9 +74,11 @@ class Repository extends \GitElephant\Repository
      * @throws \Symfony\Component\Process\Exception\RuntimeException
      * @return Repository
      */
-    public function cloneFrom($url, $to = null, $depth = null)
+    public function cloneFrom($url, $to = null, $repoReference = null, $depth = null, $recursive = false)
     {
-        $command = (Command\CloneCommand::getInstance($this))->cloneUrl($url, $to, $depth);
+        $binaryVersion = $this->caller->getBinaryVersion();
+        $command = (Command\CloneCommand::getInstance($this))->setBinaryVersion($binaryVersion)
+            ->cloneUrl($url, $to, $repoReference, $depth, $recursive);
         $this->caller->execute($command);
         return $this;
     }
@@ -83,8 +87,8 @@ class Repository extends \GitElephant\Repository
      *  Save your local modifications to a new stash, and run git reset --hard to revert them.
      *
      * @param string|null $message
-     * @param boolean $includeUntracked
-     * @param boolean $keepIndex
+     * @param boolean     $includeUntracked
+     * @param boolean     $keepIndex
      */
     public function stash($message = null, $includeUntracked = false, $keepIndex = false)
     {

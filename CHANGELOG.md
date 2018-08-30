@@ -1,6 +1,9 @@
 Conductor: Git VCS Support
 ===============================================
 
+# 0.9.3
+- Fixed shallow clone issue when specifying branch
+
 # 0.9.2
 - Updated conductor/core require to ~0.9.2
 

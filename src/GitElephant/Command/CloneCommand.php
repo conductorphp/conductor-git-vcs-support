@@ -19,12 +19,10 @@
 
 namespace ConductorGitVcsSupport\GitElephant\Command;
 
-use ConductorGitVcsSupport\GitElephant\Repository;
-
 /**
  * Clone command generator
  *
- * This class will be removed once PR https://github.com/matteosister/GitElephant/pull/132 is merged
+ * @todo Remove this class once https://github.com/matteosister/GitElephant/pull/148 is merged
  *
  * @author Matteo Giachino <matteog@gmail.com>
  * @author Kirk Madera <kmadera@robofirm.com>
@@ -32,16 +30,34 @@ use ConductorGitVcsSupport\GitElephant\Repository;
 class CloneCommand extends \GitElephant\Command\CloneCommand
 {
     /**
+     * @var string
+     */
+    private $binaryVersion;
+
+    /**
+     * @param $version
+     *
+     * @return $this
+     */
+    public function setBinaryVersion($version)
+    {
+        $this->binaryVersion = $version;
+        return $this;
+    }
+
+    /**
      * Command to clone a repository
      *
-     * @param string $url repository url
-     * @param string $to  where to clone the repo
-     * @param int|null $depth Depth of commits to clone
+     * @param string      $url           repository url
+     * @param string      $to            where to clone the repo
+     * @param string|null $repoReference Repo reference to clone. Required if performing a shallow clone.
+     * @param int|null    $depth         Depth of commits to clone
+     * @param bool    $recursive         Whether to recursively clone submodules.
      *
      * @throws \RuntimeException
      * @return string command
      */
-    public function cloneUrl($url, $to = null, $depth = null)
+    public function cloneUrl($url, $to = null, $repoReference = null, $depth = null, $recursive = false)
     {
         $this->clearAll();
         $this->addCommandName(static::GIT_CLONE_COMMAND);
@@ -50,12 +66,25 @@ class CloneCommand extends \GitElephant\Command\CloneCommand
             $this->addCommandSubject2($to);
         }
 
+        if (null !== $repoReference) {
+            // git documentation says the --branch was added in 2.0.0, but it exists undocumented at least back to 1.8.3.1
+            if (version_compare($this->binaryVersion, '1.8.3.1', '<')) {
+                throw new \RuntimeException('Please upgrade to git v1.8.3.1 or newer to support cloning a specific branch.');
+            }
+            $this->addCommandArgument('--branch=' . $repoReference);
+        }
+
         if (null !== $depth) {
             $this->addCommandArgument('--depth=' . $depth);
-            // @todo Add shallow cloning of submodules. Like needs git version check since it's a newer feature
-            //if (1 == $depth) {
-            //    $this->addCommandArgument('--shallow-submodules');
-            //}
+            // shallow-submodules is a nice to have feature. Just ignoring if git version not high enough
+            // It would be nice if this had a logger injected for us to log notices
+            if (version_compare($this->binaryVersion, '2.9.0', '>=') && $recursive && 1 == $depth) {
+                $this->addCommandArgument('--shallow-submodules');
+            }
+        }
+
+        if ($recursive) {
+            $this->addCommandArgument('--recursive');
         }
 
         return $this->getCommand();

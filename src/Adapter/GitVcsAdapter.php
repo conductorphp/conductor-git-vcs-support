@@ -37,8 +37,8 @@ class GitVcsAdapter implements RepositoryAdapterInterface
         $repository = $this->getRepository();
         if (!file_exists("{$this->path}/.git")) {
             $depth = $shallow ? 1 : null;
-            $repository->cloneFrom($this->repoUrl, $this->path, $depth);
-            $repository->checkout($repoReference);
+            $repository->cloneFrom($this->repoUrl, $this->path, $repoReference, $depth, true);
+//            $repository->checkout($repoReference);
         } else {
             if ($repository->isDirty()) {
                 throw new Exception\RuntimeException(

@@ -57,7 +57,7 @@ class CloneCommand extends \GitElephant\Command\CloneCommand
      * @throws \RuntimeException
      * @return string command
      */
-    public function cloneUrl($url, $to = null, $repoReference = null, $depth = null, $recursive = false)
+    public function cloneUrl($url, $to = null, string $repoReference = null, int $depth = null, bool $recursive = false)
     {
         $this->clearAll();
         $this->addCommandName(static::GIT_CLONE_COMMAND);

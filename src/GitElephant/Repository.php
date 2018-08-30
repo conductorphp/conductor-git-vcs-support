@@ -72,7 +72,7 @@ class Repository extends \GitElephant\Repository
      * @throws \Symfony\Component\Process\Exception\RuntimeException
      * @return Repository
      */
-    public function cloneFrom($url, $to = null, $repoReference = null, $depth = null, $recursive = false)
+    public function cloneFrom(string $url, ?string $to = null, string $repoReference = null, int $depth = null, bool $recursive = false)
     {
         $binaryVersion = $this->caller->getBinaryVersion();
         $command = (Command\CloneCommand::getInstance($this))->setBinaryVersion($binaryVersion)

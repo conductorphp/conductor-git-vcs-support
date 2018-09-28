@@ -1,6 +1,9 @@
 Conductor: Git VCS Support
 ===============================================
 
+# 0.9.4
+- Fixed license per https://spdx.org/licenses/
+
 # 0.9.3
 - Fixed shallow clone issue when specifying branch
 - Removed custom stash code since PR 

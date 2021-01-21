@@ -1,22 +1,9 @@
-Conductor: Git VCS Support
-===============================================
+# Changelog
+All notable changes to this project will be documented in this file.
 
-# 0.9.4
-- Fixed license per https://spdx.org/licenses/
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-# 0.9.3
-- Fixed shallow clone issue when specifying branch
-- Removed custom stash code since PR 
-  https://github.com/matteosister/GitElephant/pull/132 was merged
-
-# 0.9.2
-- Updated conductor/core require to ~0.9.2
-
-# 0.9.1
-- Added consideration for shallow clone
-
-# 0.9.0
-- Initial development "stable" build
-
-# 0.1.0
-- Initial build
+## [1.0.0] - 2021-01-21
+### Added
+- Added support for the Git VCS (Version Control System).

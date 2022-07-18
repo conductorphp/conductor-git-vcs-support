@@ -25,7 +25,7 @@ namespace ConductorGitVcsSupport\GitElephant\Command;
  * @todo Remove this class once https://github.com/matteosister/GitElephant/pull/148 is merged
  *
  * @author Matteo Giachino <matteog@gmail.com>
- * @author Kirk Madera <kmadera@robofirm.com>
+ * @author Kirk Madera <kirk.madera@rmgmedia.com>
  */
 class CloneCommand extends \GitElephant\Command\CloneCommand
 {

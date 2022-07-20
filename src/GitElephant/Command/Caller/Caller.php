@@ -82,7 +82,7 @@ class Caller implements CallerInterface
      *
      * @return mixed
      */
-    public function getBinaryPath()
+    public function getBinaryPath(): string
     {
         return $this->binary->getPath();
     }
@@ -92,7 +92,7 @@ class Caller implements CallerInterface
      *
      * @return mixed
      */
-    public function getBinaryVersion()
+    public function getBinaryVersion(): string
     {
         return $this->binary->getVersion();
     }
@@ -112,13 +112,18 @@ class Caller implements CallerInterface
      * @throws \Symfony\Component\Process\Exception\LogicException
      * @return Caller
      */
-    public function execute($cmd, $git = true, $cwd = null, $acceptedExitCodes = array(0))
+    public function execute(
+        string $cmd,
+        bool $git = true,
+        string $cwd = null
+    ): CallerInterface
     {
+        $acceptedExitCodes = [0];
         if ($git) {
             $cmd = $this->binary->getPath() . ' ' . $cmd;
         }
 
-        $process = new Process($cmd, is_null($cwd) ? $this->repositoryPath : $cwd);
+        $process = new Process([$cmd], is_null($cwd) ? $this->repositoryPath : $cwd);
         $process->setTimeout(15000);
         $process->run();
         if (!in_array($process->getExitCode(), $acceptedExitCodes)) {
@@ -141,7 +146,7 @@ class Caller implements CallerInterface
      *
      * @return string
      */
-    public function getOutput()
+    public function getOutput(): string
     {
         return implode(" ", $this->outputLines);
     }
@@ -153,7 +158,7 @@ class Caller implements CallerInterface
      *
      * @return array
      */
-    public function getOutputLines($stripBlankLines = false)
+    public function getOutputLines(bool $stripBlankLines = false): array
     {
         if ($stripBlankLines) {
             $output = array();
@@ -174,7 +179,7 @@ class Caller implements CallerInterface
      *
      * @return string
      */
-    public function getRawOutput()
+    public function getRawOutput(): string
     {
         return $this->rawOutput;
     }

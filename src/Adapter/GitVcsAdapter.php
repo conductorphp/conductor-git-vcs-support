@@ -4,7 +4,7 @@ namespace ConductorGitVcsSupport\Adapter;
 
 use ConductorCore\Repository\RepositoryAdapterInterface;
 use ConductorGitVcsSupport\Exception;
-use ConductorGitVcsSupport\GitElephant\Repository;
+use GitElephant\Repository;
 
 class GitVcsAdapter implements RepositoryAdapterInterface
 {

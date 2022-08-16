@@ -8,29 +8,14 @@ use GitElephant\Repository;
 
 class GitVcsAdapter implements RepositoryAdapterInterface
 {
-    /**
-     * @var string
-     */
-    private $repoUrl;
-    /**
-     * @var string
-     */
-    private $path;
-    /**
-     * @var Repository
-     */
-    private $repository;
-    /**
-     * @var string
-     */
-    private $currentRepoReference;
+    private string $repoUrl;
+    private string $path;
+    private ?Repository $repository = null;
+    private ?string $currentRepoReference = null;
 
-    /**
-     * @inheritdoc
-     */
     public function checkout(string $repoReference, bool $shallow = false): void
     {
-        if ($repoReference == $this->currentRepoReference) {
+        if ($repoReference === $this->currentRepoReference) {
             return;
         }
 
@@ -51,53 +36,7 @@ class GitVcsAdapter implements RepositoryAdapterInterface
     }
 
     /**
-     * @inheritdoc
-     */
-    public function isClean(): bool
-    {
-        $repository = $this->getRepository();
-        return !$repository->isDirty();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function pull(): void
-    {
-        $repository = $this->getRepository();
-        $repository->pull();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function stash(string $message): void
-    {
-        $repository = $this->getRepository();
-        $repository->stash($message, true);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function setRepoUrl(string $repoUrl): void
-    {
-        $this->repoUrl = $repoUrl;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function setPath(string $path): void
-    {
-        if ($path != $this->path) {
-            $this->path = $path;
-            $this->repository = null;
-        }
-    }
-
-    /**
-     * @return Repository
+     * Returns existing repository or creates a new one based on path
      */
     private function getRepository(): Repository
     {
@@ -106,6 +45,37 @@ class GitVcsAdapter implements RepositoryAdapterInterface
         }
 
         return $this->repository;
+    }
+
+    public function isClean(): bool
+    {
+        $repository = $this->getRepository();
+        return !$repository->isDirty();
+    }
+
+    public function pull(): void
+    {
+        $repository = $this->getRepository();
+        $repository->pull();
+    }
+
+    public function stash(string $message): void
+    {
+        $repository = $this->getRepository();
+        $repository->stash($message, true);
+    }
+
+    public function setRepoUrl(string $repoUrl): void
+    {
+        $this->repoUrl = $repoUrl;
+    }
+
+    public function setPath(string $path): void
+    {
+        if ($path !== $this->path) {
+            $this->path = $path;
+            $this->repository = null;
+        }
     }
 
 }

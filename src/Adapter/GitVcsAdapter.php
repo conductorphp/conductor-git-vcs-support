@@ -72,7 +72,7 @@ class GitVcsAdapter implements RepositoryAdapterInterface
 
     public function setPath(string $path): void
     {
-        if ($path !== $this->path) {
+        if (!isset($this->path) || $path !== $this->path) {
             $this->path = $path;
             $this->repository = null;
         }

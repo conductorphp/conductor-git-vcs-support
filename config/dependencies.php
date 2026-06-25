@@ -2,8 +2,10 @@
 
 namespace ConductorGitVcsSupport;
 
+use ConductorCore\Repository\RepositoryAdapterInterface;
+
 return [
     'invokables' => [
-        \ConductorCore\Repository\RepositoryAdapterInterface::class => Adapter\GitVcsAdapter::class,
+        RepositoryAdapterInterface::class => Adapter\GitVcsAdapter::class,
     ],
 ];

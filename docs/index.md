@@ -5,6 +5,7 @@ This module adds support for Git VCS in
 [Conductor](https://github.com/conductorphp/conductor-core).
 
 ## Installation
+
 ```bash
 composer require conductor/git-vcs-support
 ```

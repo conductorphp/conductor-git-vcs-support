@@ -1,3 +1,10 @@
+[3.1.0](https://github.com/conductorphp/conductor-git-vcs-support/compare/3.0.0...3.1.0) (2026-08-10)
+
+### Features
+* PHP 8.4.1+ (CTAP-1224) ([af0b83e](https://github.com/conductorphp/conductor-git-vcs-support/commit/af0b83ea5d3d3039b0c17d81ead6cc263d608c9f))
+
+<!--- CHANGELOG SPLIT MARKER -->
+
 [2.0.1](https://github.com/conductorphp/conductor-git-vcs-support/compare/2.0.0...2.0.1) (2026-06-25)
 
 ### Bug Fixes

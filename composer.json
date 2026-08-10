@@ -1,6 +1,6 @@
 {
   "name": "conductor/git-vcs-support",
-  "version": "2.0.1",
+  "version": "3.1.0",
   "description": "Conductor Git VCS Support",
   "type": "library",
   "homepage": "https://github.com/conductorphp/conductor-git-vcs-support",
@@ -16,8 +16,8 @@
     "sort-packages": true
   },
   "require": {
-    "php": "~8.2.0|~8.3.0|~8.4.0|~8.5.0",
-    "conductor/core": "^2.0",
+    "php": "~8.4.1|~8.5.0",
+    "conductor/core": "^3.0",
     "cypresslab/gitelephant": "^4.5"
   },
   "require-dev": {

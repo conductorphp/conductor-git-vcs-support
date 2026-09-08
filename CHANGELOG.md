@@ -1,3 +1,8 @@
+[4.0.0](https://github.com/conductorphp/conductor-git-vcs-support/compare/3.1.1...4.0.0) (2026-09-08)
+
+
+<!--- CHANGELOG SPLIT MARKER -->
+
 [3.1.1](https://github.com/conductorphp/conductor-git-vcs-support/compare/3.1.0...3.1.1) (2026-08-11)
 
 ### Bug Fixes

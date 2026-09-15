@@ -1,3 +1,10 @@
+[4.1.0](https://github.com/conductorphp/conductor-git-vcs-support/compare/4.0.0...4.1.0) (2026-09-14)
+
+### Features
+* conductor/core ^5.0 (CTAP-1712) ([0eb3d36](https://github.com/conductorphp/conductor-git-vcs-support/commit/0eb3d3636de89d8836a1771d18304aa88dac9660))
+
+<!--- CHANGELOG SPLIT MARKER -->
+
 [4.0.0](https://github.com/conductorphp/conductor-git-vcs-support/compare/3.1.1...4.0.0) (2026-09-08)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "conductor/git-vcs-support",
-  "version": "4.2.0",
+  "version": "5.0.0",
   "description": "Conductor Git VCS Support",
   "type": "library",
   "homepage": "https://github.com/conductorphp/conductor-git-vcs-support",
@@ -17,7 +17,7 @@
   },
   "require": {
     "php": "~8.4.1|~8.5.0",
-    "conductor/core": "^4.0 || ^5.0 || ^6.0",
+    "conductor/core": "^7.0",
     "cypresslab/gitelephant": "^4.5"
   },
   "require-dev": {
@@ -48,5 +48,8 @@
     "cs-fix": "phpcbf",
     "test": "phpunit --colors=always",
     "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
+  },
+  "suggest": {
+    "git": "git on PATH; checked when the adapter is selected."
   }
 }

@@ -4,16 +4,19 @@ namespace ConductorGitVcsSupport;
 
 class ConfigProvider
 {
-    /**
-     * To add a bit of a structure, each section is defined in a separate
-     * method which returns an array with its configuration.
-     *
-     * @return array
-     */
+    public const ADAPTER_NAME = 'git';
+
     public function __invoke(): array
     {
         return [
             'dependencies' => $this->getDependencies(),
+            'vcs'          => [
+                'adapters' => [
+                    self::ADAPTER_NAME => [
+                        'class' => Adapter\GitVcsAdapter::class,
+                    ],
+                ],
+            ],
         ];
     }
 
@@ -21,5 +24,4 @@ class ConfigProvider
     {
         return require(__DIR__ . '/../config/dependencies.php');
     }
-
 }

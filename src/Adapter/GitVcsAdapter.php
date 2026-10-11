@@ -3,15 +3,28 @@
 namespace ConductorGitVcsSupport\Adapter;
 
 use ConductorCore\Repository\RepositoryAdapterInterface;
+use ConductorCore\Runtime\Requirement;
+use ConductorCore\Runtime\RuntimeRequirementsInterface;
 use ConductorGitVcsSupport\Exception;
 use GitElephant\Repository;
 
-class GitVcsAdapter implements RepositoryAdapterInterface
+class GitVcsAdapter implements RepositoryAdapterInterface, RuntimeRequirementsInterface
 {
     private string $repoUrl;
     private string $path;
     private ?Repository $repository = null;
     private ?string $currentRepoReference = null;
+
+    /**
+     * GitElephant shells out to git; without it every call died with exit 127 (CTAP-1738). Checked by
+     * core's RepositoryAdapterManager when this adapter is selected (CTAP-1759).
+     *
+     * @return list<Requirement>
+     */
+    public function runtimeRequirements(): array
+    {
+        return [Requirement::binary('git', 'the git package')];
+    }
 
     public function checkout(string $repoReference, bool $shallow = false): void
     {

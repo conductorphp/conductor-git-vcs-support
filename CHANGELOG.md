@@ -1,3 +1,14 @@
+[5.0.0](https://github.com/conductorphp/conductor-git-vcs-support/compare/4.2.0...5.0.0) (2026-10-11)
+
+### Features
+* git as a runtime requirement (CTAP-1759) ([43108f4](https://github.com/conductorphp/conductor-git-vcs-support/commit/43108f4f2b77f0055b9eb08c4e5a29e55d4dfde1))
+* conductor/core ^6.0 (CTAP-1741) ([0a19e9d](https://github.com/conductorphp/conductor-git-vcs-support/commit/0a19e9da94b17effce080c0df3dc9c1f65934750))
+* conductor/core ^5.0 (CTAP-1712) ([0eb3d36](https://github.com/conductorphp/conductor-git-vcs-support/commit/0eb3d3636de89d8836a1771d18304aa88dac9660))
+### Bug Fixes
+* conductor/core ^7.0 (CTAP-1760) ([04eb6e9](https://github.com/conductorphp/conductor-git-vcs-support/commit/04eb6e9718b847ad0a5c180ac8480135906af03b))
+
+<!--- CHANGELOG SPLIT MARKER -->
+
 [4.2.0](https://github.com/conductorphp/conductor-git-vcs-support/compare/4.1.0...4.2.0) (2026-09-16)
 
 ### Features
